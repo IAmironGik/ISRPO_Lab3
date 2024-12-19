@@ -26,7 +26,7 @@ function startPomodoroTimer() {
 			if (pomodoroTimeRemaining <= 0) {
 					clearInterval(pomodoroInterval!);
 					vscode.window.showInformationMessage('Таймер истек! Время для перерыва.');
-					pomodoroTimeRemaining = 5 * 60; // 5 минут на перерыв
+					pomodoroTimeRemaining = 5 * 60;
 					updatePomodoroStatus();
 			}
 	}, 1000);
@@ -45,7 +45,7 @@ function startBreakTimer() {
 			clearInterval(pomodoroInterval);
 	}
 
-	pomodoroTimeRemaining = 5 * 60; // 5 минут
+	pomodoroTimeRemaining = 5 * 60;
 	updatePomodoroStatus();
 
 	pomodoroInterval = setInterval(() => {
@@ -83,14 +83,14 @@ function parseTasks() {
 			const lineText = document.lineAt(line).text;
 			let match;
 			while ((match = regex.exec(lineText)) !== null) {
-					if (match[1]) { // TODO or FIXME
+					if (match[1]) {
 							newTasks.push({
 									text: match[2],
 									completed: false,
 									line: line,
 									file: document.fileName
 							});
-					} else if (match[3]) { // Checkbox task
+					} else if (match[3]) {
 							newTasks.push({
 									text: match[4],
 									completed: match[3] === 'x',
@@ -267,16 +267,15 @@ function removeCommentsFromEditor(editor: vscode.TextEditor, commentType: 'both'
 
     let cleanedText = text;
 
-    // Регулярные выражения для удаления комментариев
     const singleLineCommentRegex = /\/\/.*$/gm;
     const multiLineCommentRegex = /\/\*[\s\S]*?\*\//g;
 
     if (commentType === 'both' || commentType === 'single') {
-        cleanedText = cleanedText.replace(singleLineCommentRegex, '');  // Удаление однострочных комментариев
+        cleanedText = cleanedText.replace(singleLineCommentRegex, '');
     }
 
     if (commentType === 'both' || commentType === 'multi') {
-        cleanedText = cleanedText.replace(multiLineCommentRegex, '');  // Удаление многострочных комментариев
+        cleanedText = cleanedText.replace(multiLineCommentRegex, '');
     }
 
     const fullRange = new vscode.Range(
